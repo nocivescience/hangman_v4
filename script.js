@@ -1,6 +1,8 @@
 const playAgain=document.querySelector('.play-btn');
 const finalMessage=document.querySelector('.final-message');
 const wordEl=document.querySelector('.word');
+const partEl=document.querySelectorAll('.part');
+const wrongLetterEl=document.querySelector('.wrong-letter');
 let correctLetters=[];
 let wrongLetters=[];
 const words=['hola','mundo','como','estas','por','alla'];
@@ -23,7 +25,9 @@ function displayWord(){
     console.log(wordEl)
 }
 function updateWrongLetterEl(){
-    finalMessage.innerText='you lost :('
+    wrongLetterEl.innerHTML=`
+            ${wrongLetters.length>0?'<p>Te equivocaste</p>':''}
+    `;
 };
 function showNotification(){
     console.log('hola mundo')
@@ -65,8 +69,15 @@ window.addEventListener('keydown',(e)=>{
                 correctLetters.push(e.key);
                 displayWord()
             }else{
-                showNotification()
+                updateWrongLetterEl()
             }
+        }else{
+            showNotification()
         }
     }
+});
+playAgain.addEventListener('click',()=>{
+    correctLetters.splice(0);
+    wrongLetters.splice(0);
+    selectedWord=words[Math.floor(Math.random()*words.length)];
 })
