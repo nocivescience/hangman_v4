@@ -1,11 +1,32 @@
 const playAgain=document.querySelector('.play-btn');
-const finalMessage=document.querySelector('.final-message')
+const finalMessage=document.querySelector('.final-message');
+const wordEl=document.querySelector('.word');
 let correctLetters=[];
 let wrongLetters=[];
 const words=['hola','mundo','como','estas','por','alla'];
 let selectedWord=words[Math.floor(Math.random()*words.length)];
+console.log(selectedWord);
+function displayWord(){
+    wordEl.innerHTML=`
+        ${
+            selectedWord
+            .split('')
+            .map(
+                letter=>`
+                    <span class="letter">
+                        ${correctLetters.includes(letter)?letter:''}
+                    </span>
+                `
+            ).join('')
+        }
+    `;
+    console.log(wordEl)
+}
 function updateWrongLetterEl(){
     finalMessage.innerText='you lost :('
+};
+function showNotification(){
+    console.log('hola mundo')
 };
 playAgain.addEventListener('click',()=>{
     correctLetters.splice(0);
@@ -39,12 +60,13 @@ window.addEventListener('keydown',(e)=>{
         e.key==='y'||
         e.key==='z'
     ){
-        if(!correctLetters.includes(e.key)){
-            correctLetters.push(e.key)
-        }else{
-            wrongLetters.push(e.key)
+        if(selectedWord.includes(e.key)){
+            if(!correctLetters.includes(e.key)){
+                correctLetters.push(e.key);
+                displayWord()
+            }else{
+                showNotification()
+            }
         }
     }
-    console.log(correctLetters)
-    console.log(wrongLetters)
 })
