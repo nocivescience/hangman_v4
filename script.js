@@ -114,3 +114,4 @@ playAgain.addEventListener('click',()=>{
             part.innerText='';
     })
 })
+displayWord()

@@ -9,13 +9,13 @@ svg{
 }
 .letter{
     width:30px;
-    height: 20px;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.605);
-    color: aliceblue;
-    display: inline-table;
-    text-align: center;
+    height: 50px;
+    display: inline-flex;
+    align-self: center;
+    font-size: 40px;
+    justify-content: center;
     margin: 40px 15px;
+    border-bottom: black 2px solid;
 }
 .word{
     width: 500px;
