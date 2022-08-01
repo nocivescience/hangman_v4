@@ -26,11 +26,37 @@ svg{
 .part{
     width: 50px;
     height: 50px;
-    background-color: red;
+    background-color: rgb(0, 136, 255);
     border-radius: 5px;
     margin:10px;
 }
 .container{
     display: flex;
     justify-content: center;
+}
+.bg-info.bg-gradient{
+    padding: 15px;
+    border-radius: 7px;
+}
+.final-message{
+    height: 75px;
+    text-align: center;
+}
+.play-btn{
+    width: 100%;
+    align-self: center;
+}
+.popup{
+    width: 30%;
+}
+.part.moving{
+    transform: rotateX(3600deg);
+    transition: transform 1s ease-in-out;
+}
+.part{
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 33;
 }

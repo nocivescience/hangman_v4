@@ -3,8 +3,10 @@ const finalMessage=document.querySelector('.final-message');
 const wordEl=document.querySelector('.word');
 const partEl=document.querySelectorAll('.part');
 const wrongLetterEl=document.querySelector('.wrong-letter');
+const popupEl=document.querySelector('.popup');
 let correctLetters=[];
 let wrongLetters=[];
+const rechazo='rechazo'
 const words=['hola','mundo','como','estas','por','alla'];
 let selectedWord=words[Math.floor(Math.random()*words.length)];
 console.log(selectedWord);
@@ -22,15 +24,34 @@ function displayWord(){
             ).join('')
         }
     `;
-    console.log(wordEl)
+    const innerWord=wordEl.innerText.replace(/\n/g,'');
+    if(innerWord===selectedWord){
+        finalMessage.innerText='Has ganado Campeón';
+        popupEl.style.display='flex';
+        popupEl.style.flexDirection='column';
+        popupEl.style.justifyContent ='center';
+        popupEl.style.alignItem='center';
+    }
 }
 function updateWrongLetterEl(){
     wrongLetterEl.innerHTML=`
-            ${wrongLetters.length>0?'<p>Te equivocaste</p>':''}
+        ${wrongLetters.length>0?'<p class="bg-info bg-gradient">Te equivocaste</p>':''}
+        ${wrongLetters.map(letter=>`<span>${letter}</span>`)}
     `;
+    partEl.forEach((part,index)=>{
+        const errors=wrongLetters.length;
+        if(index<errors){
+            part.style.backgroundColor='red';
+            part.classList.add('moving')
+            part.innerText=rechazo[index];
+        }
+        if(wrongLetters.length===partEl.length){
+            finalMessage.innerText='has perdido :('
+        }
+    })
 };
 function showNotification(){
-    console.log('hola mundo')
+    console.log('hola mundo');
 };
 playAgain.addEventListener('click',()=>{
     correctLetters.splice(0);
@@ -69,10 +90,15 @@ window.addEventListener('keydown',(e)=>{
                 correctLetters.push(e.key);
                 displayWord()
             }else{
-                updateWrongLetterEl()
+                showNotification()
             }
         }else{
-            showNotification()
+            if(!wrongLetters.includes(e.key)){
+                wrongLetters.push(e.key)
+                updateWrongLetterEl()
+            }else{
+                showNotification();
+            }
         }
     }
 });
@@ -80,4 +106,11 @@ playAgain.addEventListener('click',()=>{
     correctLetters.splice(0);
     wrongLetters.splice(0);
     selectedWord=words[Math.floor(Math.random()*words.length)];
+    displayWord();
+    updateWrongLetterEl();
+    partEl.forEach((part,index)=>{
+        part.style.backgroundColor='rgb(0, 136, 255)';
+            part.classList.remove('moving')
+            part.innerText='';
+    })
 })
